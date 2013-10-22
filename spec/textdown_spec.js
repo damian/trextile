@@ -6,8 +6,8 @@ describe("Textdown", function() {
     });
 
     it("should convert a newline starting with `h1. Foo\nh6. Bar` to <h1>Foo</h1>\n<h6>Bar</h6>", function() {
-      inst = new Textdown("h1. Foo\nh6. Bar");
-      expect(inst.toHtml()).toEqual("<h1>Foo</h1>\n<h6>Bar</h6>");
+      inst = new Textdown("h1. Foo\n\nh6. Bar");
+      expect(inst.toHtml()).toEqual("<h1>Foo</h1><h6>Bar</h6>");
     });
   });
 
@@ -79,10 +79,29 @@ describe("Textdown", function() {
         expect(inst.toHtml()).toEqual("<ol><li>Foo</li><li>Bar</li><li>Baz</li></ol>");
       });
 
-      it("should convert any line containing a # at the front and wrap it in an ordered list", function() {
-        inst = new Textdown("# Foo\n# Bar\n# Baz\n\nFoo\n\n# Foo\n# Bar\n# Baz");
-        expect(inst.toHtml()).toEqual("<ol><li>Foo</li><li>Bar</li><li>Baz</li></ol><p>Foo</p><ol><li>Foo</li><li>Bar</li><li>Baz</li></ol>");
+      it("should convert any line containing a * at the front and wrap it in an unordered list", function() {
+        inst = new Textdown("* Foo\n* Bar\n* Baz");
+        expect(inst.toHtml()).toEqual("<ul><li>Foo</li><li>Bar</li><li>Baz</li></ul>");
       });
+    });
+  });
+
+  describe("links", function() {
+    it("should convert any link in to an anchor with a href", function() {
+      inst = new Textdown('Some text to go here that links to the "Google":http://google.com homepage');
+      expect(inst.toHtml()).toEqual("<p>Some text to go here that links to the <a href=\"http://google.com\">Google</a> homepage</p>");
+    });
+  });
+
+  describe("images", function() {
+    it("should convert any images in to an img tag", function() {
+      inst = new Textdown('Some text to go here and an inline !http://placehold.it/350x150!');
+      expect(inst.toHtml()).toEqual("<p>Some text to go here and an inline <img src=\"http://placehold.it/350x150\" alt=\"\" /></p>");
+    });
+
+    it("should preserve any alt information as part of the image", function() {
+      inst = new Textdown('Some text to go here and an inline !http://placehold.it/350x150(Foo)!');
+      expect(inst.toHtml()).toEqual("<p>Some text to go here and an inline <img src=\"http://placehold.it/350x150\" alt=\"Foo\" /></p>");
     });
   });
 });

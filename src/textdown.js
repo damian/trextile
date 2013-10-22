@@ -16,22 +16,36 @@ Textdown.prototype.convertBlockQuotes = function() {
 Textdown.prototype.convertLists = function() {
   var listsRegex = /^[#*]\s(.*)$/gm;
 
-  var foo = function(match, p0, place, matches) {
-    var output = "";
-    if (place === 0) {
-      output = "<ol>";
-      var listItems = matches.split(/\n/gm);
+  var output = "",
+      lines = this.text.split(/\n/gm),
+      inList = false;
 
-      for (var i = 0; i < listItems.length; i++) {
-        var item = listItems[i];
-        output += "<li>" + item.substr(2) + "</li>";
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i],
+        isOrderedList = line.charAt(0) === '#',
+        isUnorderedList = line.charAt(0) === '*';
+
+    if (isOrderedList || isUnorderedList) {
+      listType = isOrderedList ? 'ol' : isUnorderedList ? 'ul' : '';
+      if (!inList) {
+        inList = true;
+        output += "<" + listType + ">";
       }
-      output += "</ol>";
+      output += "<li>" + line.substr(2) + "</li>";
+      if (i === lines.length - 1) {
+        inList = false;
+        output += "</" + listType + ">";
+      }
+    } else {
+      if (line.length === 0 && inList) {
+        inList = false;
+        output += "</" + listType + ">";
+      }
+      output += "\n" + line + "\n";
     }
-    return output;
-  };
+  }
 
-  this.text = this.text.replace(listsRegex, foo);
+  this.text = output;
 };
 
 Textdown.prototype.convertParagraphs = function() {
@@ -50,9 +64,15 @@ Textdown.prototype.convertParagraphs = function() {
 Textdown.prototype.convertQuotes = function() {
   var openingDoubleQuote = "&#8220;",
       closingDoubleQuote = "&#8221;",
-      doubleQuoteRegex = /\"([^\"]*)\"/g;
+      doubleQuoteRegex = /\s\"([^\"]+)\"/gm;
 
-  this.text = this.text.replace(doubleQuoteRegex, openingDoubleQuote + "$1" + closingDoubleQuote);
+  this.text = this.text.replace(doubleQuoteRegex, function(m0, m1, m2) {
+    var output = m0;
+    output = output.replace(/\"/, openingDoubleQuote);
+    output = output.replace(/\"/, closingDoubleQuote);
+
+    return output;
+  });
 };
 
 Textdown.prototype.convertDoubleHyphens = function() {
@@ -87,8 +107,25 @@ Textdown.prototype.convertSymbols = function() {
   this.text = this.text.replace(symbolRegex, symbolSub);
 };
 
+Textdown.prototype.convertLinks = function() {
+  var linkRegex = /\"([^\"]+)\"\:(\S+)/gm;
+
+  this.text = this.text.replace(linkRegex, "<a href=\"$2\">$1</a>");
+};
+
+Textdown.prototype.convertImages = function() {
+  var imgRegex = /!(([^!\s\(]+)(\((\w+)\))?)!/gm;
+
+  this.text = this.text.replace(imgRegex, function(full, m1, m2, m3, m4) {
+    m4 = m4 || "";
+    return "<img src=\"" + m2 + "\" alt=\"" + m4 + "\" />";
+  });
+};
+
 Textdown.prototype.toHtml = function() {
   this.convertHeaders();
+  this.convertLinks();
+  this.convertImages();
   this.convertQuotes();
   this.convertDoubleHyphens();
   this.convertSingleHyphens();

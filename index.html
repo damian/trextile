@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Demo</title>
+  <script src="src/textdown.js"></script>
+  <script>
+        function updatePreview(value) {
+          var output = new Textdown(value).toHtml();
+          var preview = document.getElementById('preview');
+          preview.innerHTML = output;
+        }
+  </script>
+</head>
+<body>
+  <textarea onkeyup="updatePreview(this.value)"></textarea>
+  <div id="preview"></div>
+
+</body>
+</html>
