@@ -104,4 +104,21 @@ describe("Textdown", function() {
       expect(inst.toHtml()).toEqual("<p>Some text to go here and an inline <img src=\"http://placehold.it/350x150\" alt=\"Foo\" /></p>");
     });
   });
+
+  describe("quick phrase modifiers", function() {
+    it("should convert any words prefixed and suffied with underscores in to em tags", function() {
+      inst = new Textdown('Some text to go _here_ and _also here_.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <em>here</em> and <em>also here</em>.</p>");
+    });
+
+    it("should convert any words prefixed and suffied with stars in to strong tags", function() {
+      inst = new Textdown('Some text to go *here* and *also here*.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <strong>here</strong> and <strong>also here</strong>.</p>");
+    });
+
+    it("should convert any words prefixed and suffied with two question marks in to cite tags", function() {
+      inst = new Textdown('Some text to go ??here?? and ??also here??.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <cite>here</cite> and <cite>also here</cite>.</p>");
+    });
+  });
 });

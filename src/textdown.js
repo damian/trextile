@@ -122,6 +122,24 @@ Textdown.prototype.convertImages = function() {
   });
 };
 
+Textdown.prototype.convertEmphasis = function() {
+  var emphasisRegex = /_([^_]+)_/gm;
+
+  this.text = this.text.replace(emphasisRegex, "<em>$1</em>");
+};
+
+Textdown.prototype.convertBold = function() {
+  var boldRegex = /(?!^)\*([^\*]+)\*/gm;
+
+  this.text = this.text.replace(boldRegex, "<strong>$1</strong>");
+};
+
+Textdown.prototype.convertCitations = function() {
+  var citationRegex = /\?{2}([^\?]+)\?{2}/gm;
+
+  this.text = this.text.replace(citationRegex, "<cite>$1</cite>");
+};
+
 Textdown.prototype.toHtml = function() {
   this.convertHeaders();
   this.convertLinks();
@@ -132,6 +150,10 @@ Textdown.prototype.toHtml = function() {
   this.convertTripleDots();
   this.convertDimensions();
   this.convertSymbols();
+
+  this.convertEmphasis();
+  this.convertBold();
+  this.convertCitations();
 
   this.convertBlockQuotes();
   this.convertLists();
