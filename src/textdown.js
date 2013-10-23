@@ -53,8 +53,6 @@ Textdown.prototype.parsePreBlocks = function() {
   var preblockRegex = /(<pre[^>]*>[\s\S]+?<\/pre>)/gm,
       matches = this.text.match(preblockRegex) || [];
 
-  debugger;
-
   if (matches.length) {
     this.preBlocks = matches;
     this.text = this.text.replace(preblockRegex, '^^^^^^');
