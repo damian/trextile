@@ -1,11 +1,12 @@
 var Textdown = function(text) {
   this.textile = text;
-  this.text = "";
+  this.text = this.textile;
+  this.preBlocks = [];
 };
 
 Textdown.prototype.convertHeaders = function() {
   var headerRegex = /^(h[1-6])\.\s?(.*)$/gm;
-  this.text = this.textile.replace(headerRegex, "<$1>$2</$1>");
+  this.text = this.text.replace(headerRegex, "<$1>$2</$1>");
 };
 
 Textdown.prototype.convertBlockQuotes = function() {
@@ -48,12 +49,33 @@ Textdown.prototype.convertLists = function() {
   this.text = output;
 };
 
+Textdown.prototype.parsePreBlocks = function() {
+  var preblockRegex = /(<pre[^>]*>[\s\S]+?<\/pre>)/gm,
+      matches = this.text.match(preblockRegex) || [];
+
+  debugger;
+
+  if (matches.length) {
+    this.preBlocks = matches;
+    this.text = this.text.replace(preblockRegex, '^^^^^^');
+  }
+};
+
+Textdown.prototype.revertPreBlocks = function() {
+  if (this.preBlocks.length) {
+    for (var i = 0; i < this.preBlocks.length; i++) {
+      var block = this.preBlocks[i];
+      this.text = this.text.replace('^^^^^^', block);
+    }
+  }
+};
+
 Textdown.prototype.convertParagraphs = function() {
   var paragraphs = this.text.trim().split(/\n{2,}/gm);
 
   for (var i = 0; i < paragraphs.length; i++) {
     var token = paragraphs[i];
-    if (token.charAt(0) !== "<") {
+    if (token.charAt(0) !== "<" && token !== '^^^^^^') {
       paragraphs[i] = "<p>" + paragraphs[i] + "</p>";
     }
   }
@@ -141,6 +163,7 @@ Textdown.prototype.convertCitations = function() {
 };
 
 Textdown.prototype.toHtml = function() {
+  this.parsePreBlocks();
   this.convertHeaders();
   this.convertLinks();
   this.convertImages();
@@ -158,6 +181,8 @@ Textdown.prototype.toHtml = function() {
   this.convertBlockQuotes();
   this.convertLists();
   this.convertParagraphs();
+
+  this.revertPreBlocks();
 
   return this.text;
 };

@@ -121,4 +121,11 @@ describe("Textdown", function() {
       expect(inst.toHtml()).toEqual("<p>Some text to go <cite>here</cite> and <cite>also here</cite>.</p>");
     });
   });
+
+  describe("ignore pre blocks", function() {
+    it("should ensure any pre blocks within the text remain in tact", function() {
+      inst = new Textdown("Hello world\n\n<pre><code>h1. Foo</code></pre>\n\n<pre><code>h2. Bar</code></pre>");
+      expect(inst.toHtml()).toEqual("<p>Hello world</p><pre><code>h1. Foo</code></pre><pre><code>h2. Bar</code></pre>");
+    });
+  });
 });
