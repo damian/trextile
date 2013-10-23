@@ -75,7 +75,7 @@ describe("Textdown", function() {
   describe("lists", function() {
     describe("ordered lists", function() {
       it("should convert any line containing a # at the front and wrap it in an ordered list", function() {
-        inst = new Textdown("# Foo\n# Bar\n# Baz");
+        inst = new Textdown("# Foo\n# Bar\n# Baz\n");
         expect(inst.toHtml()).toEqual("<ol><li>Foo</li><li>Bar</li><li>Baz</li></ol>");
       });
 

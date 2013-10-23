@@ -64,7 +64,10 @@ Textdown.prototype.convertLists = function() {
         isUnorderedList = line.charAt(0) === '*';
 
     if (isOrderedList || isUnorderedList) {
-      listType = isOrderedList ? 'ol' : isUnorderedList ? 'ul' : '';
+      listType = 'ul';
+      if (isOrderedList) {
+        listType = 'ol';
+      }
       if (!inList) {
         inList = true;
         output += "<" + listType + ">";
