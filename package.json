@@ -7,6 +7,10 @@
     "test": "grunt --verbose"
   },
   "author": "Damian Nicholson",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/damian/textdown"
+  },
   "license": "BSD-2-Clause",
   "devDependencies": {
     "grunt": "~0.4.1",
