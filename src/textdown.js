@@ -1,19 +1,56 @@
+/**
+ * Textdown is a lightweight Textile to HTML conversion tool
+ *
+ * @class Textdown
+ * @constructor
+ */
 var Textdown = function(text) {
+
+  /**
+   * @property textile
+   * @type String
+   */
   this.textile = text;
+
+  /**
+   * @property text
+   * @type String
+   */
   this.text = this.textile;
+
+  /**
+   * @property preBlocks
+   * @type Array
+   * @default []
+   */
   this.preBlocks = [];
 };
 
+/**
+ * Converts block h1-h6 textile tags to HTML header tags
+ *
+ * @method convertHeaders
+ */
 Textdown.prototype.convertHeaders = function() {
   var headerRegex = /^(h[1-6])\.\s?(.*)$/gm;
   this.text = this.text.replace(headerRegex, "<$1>$2</$1>");
 };
 
+/**
+ * Converts block bq textile tags to be wrapped in blockquote HTML tags
+ *
+ * @method convertBlockQuotes
+ */
 Textdown.prototype.convertBlockQuotes = function() {
   var blockQuoteRegex = /^bq\.\s?(.*)$/gm;
   this.text = this.text.replace(blockQuoteRegex, "<blockquote><p>$1</p></blockquote>");
 };
 
+/**
+ * Converts numbered and bulleted textile tags to ordered and unordered HTML lists
+ *
+ * @method convertLists
+ */
 Textdown.prototype.convertLists = function() {
   var listsRegex = /^[#*]\s(.*)$/gm;
 
@@ -49,6 +86,12 @@ Textdown.prototype.convertLists = function() {
   this.text = output;
 };
 
+/**
+ * Parse preformatted HTML text from the textile document and replace
+ * them with placeholder elements
+ *
+ * @method parsePreBlocks
+ */
 Textdown.prototype.parsePreBlocks = function() {
   var preblockRegex = /(<pre[^>]*>[\s\S]+?<\/pre>)/gm,
       matches = this.text.match(preblockRegex) || [];
@@ -59,6 +102,11 @@ Textdown.prototype.parsePreBlocks = function() {
   }
 };
 
+/**
+ * Replaces the placeholder elements with the preformatted HTML text
+ *
+ * @method revertPreBlocks
+ */
 Textdown.prototype.revertPreBlocks = function() {
   if (this.preBlocks.length) {
     for (var i = 0; i < this.preBlocks.length; i++) {
@@ -107,10 +155,20 @@ Textdown.prototype.convertTripleDots = function() {
   this.text = this.text.replace(/\.{3}/gm, '&#8230;');
 };
 
+/**
+ * Converts textile dimensions to use encoded entities
+ *
+ * @method convertDimensions
+ */
 Textdown.prototype.convertDimensions = function() {
   this.text = this.text.replace(/\sx\s/gm, '&#215;');
 };
 
+/**
+ * Converts any special symbols in the textile to encoded entities
+ *
+ * @method convertSymbols
+ */
 Textdown.prototype.convertSymbols = function() {
   var symbolRegex = /\((TM|R|C)\)/gm;
 
