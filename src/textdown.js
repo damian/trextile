@@ -116,11 +116,18 @@ Textdown.prototype.revertPreBlocks = function() {
   }
 };
 
+/**
+ * Wraps each paragraph of textile in p HTML tags
+ *
+ * @method convertParagraphs
+ */
 Textdown.prototype.convertParagraphs = function() {
   var paragraphs = this.text.trim().split(/\n{2,}/gm);
 
   for (var i = 0; i < paragraphs.length; i++) {
     var token = paragraphs[i];
+
+    // Naive detection for HTML tag at the start of a line or a preformatted code block
     if (token.charAt(0) !== "<" && token !== '^^^^^^') {
       paragraphs[i] = "<p>" + paragraphs[i] + "</p>";
     }
@@ -129,6 +136,13 @@ Textdown.prototype.convertParagraphs = function() {
   this.text = paragraphs.join('');
 };
 
+/**
+ * Converts double quotes in to encoded entites
+ *
+ * Ensures that double quotes within links aren't subject to encoding
+ *
+ * @method convertQuotes
+ */
 Textdown.prototype.convertQuotes = function() {
   var openingDoubleQuote = "&#8220;",
       closingDoubleQuote = "&#8221;",
@@ -143,14 +157,29 @@ Textdown.prototype.convertQuotes = function() {
   });
 };
 
+/**
+ * Converts double hypens to encoded entities
+ *
+ * @method convertDoubleHyphens
+ */
 Textdown.prototype.convertDoubleHyphens = function() {
   this.text = this.text.replace(/\s*--\s*/gm, '&#8212;');
 };
 
+/**
+ * Converts single hypens to encoded entities
+ *
+ * @method convertSingleHyphens
+ */
 Textdown.prototype.convertSingleHyphens = function() {
   this.text = this.text.replace(/\s*-\s*/gm, '&#8211;');
 };
 
+/**
+ * Converts triple dots to a ellipsis entities
+ *
+ * @method convertTripleDots
+ */
 Textdown.prototype.convertTripleDots = function() {
   this.text = this.text.replace(/\.{3}/gm, '&#8230;');
 };
@@ -185,12 +214,22 @@ Textdown.prototype.convertSymbols = function() {
   this.text = this.text.replace(symbolRegex, symbolSub);
 };
 
+/**
+ * Converts textile links to anchor tags
+ *
+ * @method convertLinks
+ */
 Textdown.prototype.convertLinks = function() {
   var linkRegex = /\"([^\"]+)\"\:(\S+)/gm;
 
   this.text = this.text.replace(linkRegex, "<a href=\"$2\">$1</a>");
 };
 
+/**
+ * Converts textile images to img tags with an appropriate alt tag
+ *
+ * @method convertImages
+ */
 Textdown.prototype.convertImages = function() {
   var imgRegex = /!(([^!\s\(]+)(\((\w+)\))?)!/gm;
 
@@ -200,24 +239,45 @@ Textdown.prototype.convertImages = function() {
   });
 };
 
+/**
+ * Converts phrases wrapped in underscores to HTML emphasis tags
+ *
+ * @method convertEmphasis
+ */
 Textdown.prototype.convertEmphasis = function() {
   var emphasisRegex = /_([^_]+)_/gm;
 
   this.text = this.text.replace(emphasisRegex, "<em>$1</em>");
 };
 
+/**
+ * Converts phrases wrapped in asterisks to HTML strong tags
+ *
+ * @method convertBold
+ */
 Textdown.prototype.convertBold = function() {
   var boldRegex = /(?!^)\*([^\*]+)\*/gm;
 
   this.text = this.text.replace(boldRegex, "<strong>$1</strong>");
 };
 
+/**
+ * Converts phrases wrapped with double question marks to HTML cite tags
+ *
+ * @method convertCitations
+ */
 Textdown.prototype.convertCitations = function() {
   var citationRegex = /\?{2}([^\?]+)\?{2}/gm;
 
   this.text = this.text.replace(citationRegex, "<cite>$1</cite>");
 };
 
+/**
+ * Performs the Textile to HTML conversion
+ *
+ * @method toHtml
+ * @return String The HTML text
+ */
 Textdown.prototype.toHtml = function() {
   this.parsePreBlocks();
   this.convertHeaders();
