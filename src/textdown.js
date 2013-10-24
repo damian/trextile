@@ -223,7 +223,7 @@ Textdown.prototype.convertSymbols = function() {
  * @method convertLinks
  */
 Textdown.prototype.convertLinks = function() {
-  var linkRegex = /\"([^\"]+)\"\:(\S+)\b/gm;
+  var linkRegex = /\"([^\"]+)\"\:((http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-\_]*[\w@?^=%&amp;\/~+#-\)]))?/gm;
 
   this.text = this.text.replace(linkRegex, "<a href=\"$2\">$1</a>");
 };
