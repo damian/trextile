@@ -1,0 +1,67 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inconsolata, monospace;
+  color: #6c7379;
+  position: relative;
+}
+
+body > * {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+textarea {
+  border: none;
+  outline: none;
+  margin-right: 3%;
+  font-family: Inconsolata, monospace;
+  color: #6c7379;
+  font-size: 1em;
+}
+
+#preview {
+  left: 50%;
+  right: 0;
+  font-family: "Helvetica Neue";
+}
+
+#preview h1,
+#preview h2,
+#preview h3,
+#preview h4,
+#preview h5,
+#preview h6 {
+  color: #000;
+}
+
+#preview a {
+  color: #5ba4e5;
+}
+
+#preview blockquote {
+  border-left: 6px solid #6c7379;
+  margin: 0;
+  padding: 10px 1em;
+}
+
+#preview blockquote p {
+  margin: 0;
+}
+
+#preview li {
+  line-height: 22px;
+}
+
+#preview code {
+  font-family: Inconsolata, monospace;
+}
+

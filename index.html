@@ -2,62 +2,38 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Demo</title>
+  <title>Textdown</title>
+  <link rel="stylesheet" href="stylesheets/application.css">
   <script src="src/textdown.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: Inconsolata, monospace;
-      color: #6c7379;
-    }
-
-    body > * {
-      float: left;
-      width: 45%;
-      height: 450px;
-    }
-
-    textarea {
-      border: none;
-      outline: none;
-      margin-right: 3%;
-      font-family: Inconsolata, monospace;
-      color: #6c7379;
-      font-size: 1em;
-    }
-
-    #preview h1,
-    #preview h2,
-    #preview h3,
-    #preview h4,
-    #preview h5,
-    #preview h6 {
-      color: #000;
-    }
-
-    #preview a {
-      color: #5ba4e5;
-    }
-  </style>
 </head>
 <body>
 <textarea onkeyup="updatePreview(this.value)">
 h1. Textdown
 
-Textdown is a lightweight Textile to HTML conversion tool, so you should be able to write in this area, and immediately see a preview in the column on the right...magic!
+Textdown is a lightweight "Textile":http://en.wikipedia.org/wiki/Textile_(markup_language) to HTML conversion tool written in JavaScript.
 
-It is built using the following tools:
+h2. What is Textile?
+
+bq. Textile is a simple text markup. Simple symbols mark words' emphasis. Blocks of text can be easily tagged as headers, quotes, or lists. A Textile document can then be converted to HTML for viewing on the web.
+
+It's built using the following tools:
 
 # "Jasmine":http://pivotal.github.io/jasmine/
 # "Grunt.js":http://gruntjs.com/
 # "JSHint":http://www.jshint.com/
+# "Istanbul":https://github.com/gotwarlost/istanbul
+
+h2. Usage
 
 <pre>
 <code>
-var html = new Textdown("textile content").toHtml();
-// <p>textile content</p>
+var textdown = new Textdown("Some example *textile*.");
+textdown.toHtml();
 </code>
 </pre>
+
+Some example *textile*.
+
 <small>Damian Nicholson(C)</small>
 </textarea>
   <div id="preview"></div>
