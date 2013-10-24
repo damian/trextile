@@ -52,11 +52,10 @@ Textdown.prototype.convertBlockQuotes = function() {
  * @method convertLists
  */
 Textdown.prototype.convertLists = function() {
-  var listsRegex = /^[#*]\s(.*)$/gm;
-
   var output = "",
       lines = this.text.split(/\n/gm),
-      inList = false;
+      inList = false,
+      listType = 'ul';
 
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i],
@@ -64,7 +63,6 @@ Textdown.prototype.convertLists = function() {
         isUnorderedList = line.charAt(0) === '*';
 
     if (isOrderedList || isUnorderedList) {
-      listType = 'ul';
       if (isOrderedList) {
         listType = 'ol';
       }
@@ -151,7 +149,7 @@ Textdown.prototype.convertQuotes = function() {
       closingDoubleQuote = "&#8221;",
       doubleQuoteRegex = /\s\"([^\"]+)\"/gm;
 
-  this.text = this.text.replace(doubleQuoteRegex, function(m0, m1, m2) {
+  this.text = this.text.replace(doubleQuoteRegex, function(m0) {
     var output = m0;
     output = output.replace(/\"/, openingDoubleQuote);
     output = output.replace(/\"/, closingDoubleQuote);
