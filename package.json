@@ -4,7 +4,7 @@
   "description": "JavaScript port of Textile",
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "grunt --verbose"
+    "test": "grunt test --verbose"
   },
   "author": "Damian Nicholson",
   "repository": {
@@ -16,6 +16,7 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-jasmine": "~0.5.2",
-    "grunt-template-jasmine-istanbul": "~0.2.5"
+    "grunt-template-jasmine-istanbul": "~0.2.5",
+    "grunt-contrib-uglify": "~0.2.4"
   }
 }
