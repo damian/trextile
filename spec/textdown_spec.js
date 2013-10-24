@@ -91,6 +91,11 @@ describe("Textdown", function() {
       inst = new Textdown('Some text to go here that links to the "Google":http://google.com homepage');
       expect(inst.toHtml()).toEqual("<p>Some text to go here that links to the <a href=\"http://google.com\">Google</a> homepage</p>");
     });
+
+    it("should ensure that any links which end with a special character aren't embedded in the link", function() {
+      inst = new Textdown('Some text to go here that links to the "Google":http://google.com!');
+      expect(inst.toHtml()).toEqual("<p>Some text to go here that links to the <a href=\"http://google.com\">Google</a>!</p>");
+    });
   });
 
   describe("images", function() {
