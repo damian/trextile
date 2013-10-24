@@ -10,16 +10,25 @@ body {
   position: relative;
 }
 
-body > * {
+#editor {
   height: 100%;
+  position: absolute;
+  top: 140px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#editor > * {
   width: 50%;
+  height: 100%;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
 }
 
-textarea {
+#editor textarea {
   border: none;
   outline: none;
   margin-right: 3%;
