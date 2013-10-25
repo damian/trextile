@@ -1,46 +1,69 @@
-html,
-body {
-  height: 100%;
+.container {
+  width: 1100px;
+  margin: 0 auto;
+  position: relative;
 }
 
 body {
   margin: 0;
   font-family: Inconsolata, monospace;
   color: #6c7379;
-  position: relative;
 }
 
-#editor {
-  height: 100%;
-  position: absolute;
-  top: 140px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+header {
+  background: #333;
+  color: #fff;
+  font-family: "Helvetica Neue";
 }
 
-#editor > * {
-  width: 50%;
+header .container {
+  padding: 180px 0;
+}
+
+header a {
+  text-transform: uppercase;
+  border-radius: 5px;
+  background: #dfd52e;
+  color: #000;
+  text-decoration: none;
+  padding: 10px;
+}
+
+header h1 {
+  margin-top: 0;
+  font-size: 4em;
+}
+
+#main {
+  padding-top: 80px;
+}
+
+#main .container > * {
+  width: 530px;
   height: 100%;
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  height: 700px;
 }
 
-#editor textarea {
+textarea {
   border: none;
   outline: none;
-  margin-right: 3%;
   font-family: Inconsolata, monospace;
   color: #6c7379;
-  font-size: 1em;
+  font-size: 0.9em;
+  left: 0;
+  padding: 0;
+  resize: none;
 }
 
 #preview {
-  left: 50%;
-  right: 0;
   font-family: "Helvetica Neue";
+  font-size: 0.9em;
+  left: 550px;
+  border-left: 1px solid #333;
+  padding-left: 19px;
 }
 
 #preview h1,
@@ -70,7 +93,13 @@ body {
   line-height: 22px;
 }
 
+#preview pre,
 #preview code {
-  font-family: Inconsolata, monospace;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif !important;
+}
+
+#preview pre {
+  background-color: #eee;
+  padding: 10px 20px;
 }
 

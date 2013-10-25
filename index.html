@@ -7,12 +7,19 @@
   <script src="build/textdown.min.js"></script>
 </head>
 <body>
-<a href="https://github.com/damian/textdown"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<div id="editor">
-<textarea onkeyup="updatePreview(this.value)">
-h1. Textdown
+<header>
+  <div class="container">
+    <h1>Textdown</h1>
+    <a href="https://github.com/damian/textdown">View on GitHub</a>
+  </div>
+  <!-- ./container -->
+</header>
+<div id="main">
+  <div class="container">
+    <textarea onkeyup="updatePreview(this.value)">
+h2. What is Textdown?
 
-Textdown is a lightweight "Textile":http://redcloth.org/hobix.com/textile/ to HTML conversion tool written in JavaScript.
+Textdown is a *lightweight Textile to HTML conversion tool* written in JavaScript.
 
 h2. What is Textile?
 
@@ -20,10 +27,10 @@ bq. Textile is a simple text markup. Simple symbols mark words' emphasis. Blocks
 
 It's built using the following tools:
 
-# "Jasmine":http://pivotal.github.io/jasmine
-# "Grunt.js":http://gruntjs.com
-# "JSHint":http://www.jshint.com
-# "Istanbul":https://github.com/gotwarlost/istanbul
+* "Jasmine":http://pivotal.github.io/jasmine
+* "Grunt.js":http://gruntjs.com
+* "JSHint":http://www.jshint.com
+* "Istanbul":https://github.com/gotwarlost/istanbul
 
 h2. Usage
 
@@ -40,11 +47,14 @@ h2. Found an issue
 
 Log it in the "GitHub issue tracker":https://github.com/damian/textdown/issues.
 
-<small>Damian Nicholson(C)</small>
-</textarea>
-<div id="preview"></div>
+Crafted in haste by "@damian":https://twitter.com/damian.
+    </textarea>
+    <div id="preview"></div>
+    <!-- #preview -->
+  </div>
+  <!-- /editor -->
 </div>
-
+<!-- #main -->
   <script>
         function updatePreview(value) {
           var output = new Textdown(value).toHtml();
