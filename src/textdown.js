@@ -173,7 +173,9 @@ Textdown.prototype.convertDoubleHyphens = function() {
  * @method convertSingleHyphens
  */
 Textdown.prototype.convertSingleHyphens = function() {
-  this.text = this.text.replace(/\s*-\s*/gm, '&#8211;');
+  this.text = this.text.replace(/\s(-)\s/gm, function(match, m0, m1) {
+    return match.replace('-', '&#8211;');
+  });
 };
 
 /**
@@ -274,6 +276,61 @@ Textdown.prototype.convertCitations = function() {
 };
 
 /**
+ * Converts phrases wrapped with at symbols to HTML code tags
+ *
+ * @method convertInlineCode
+ */
+Textdown.prototype.convertInlineCode = function() {
+  var inlineCodeRegex = /\@([^\@]+)\@/gm;
+
+  this.text = this.text.replace(inlineCodeRegex, "<code>$1</code>");
+};
+
+/**
+ * Converts phrases wrapped with hyphen symbols to HTML del tags
+ *
+ * @method convertStrikethroughs
+ */
+Textdown.prototype.convertStrikethroughs = function() {
+  var strikethroughRegex = /-([^-]+)-/gm;
+
+  this.text = this.text.replace(strikethroughRegex, "<del>$1</del>");
+};
+
+/**
+ * Converts phrases wrapped with plus symbols to HTML ins tags
+ *
+ * @method convertInserts
+ */
+Textdown.prototype.convertInserts = function() {
+  var insertRegex = /\+([^\+]+)\+/gm;
+
+  this.text = this.text.replace(insertRegex, "<ins>$1</ins>");
+};
+
+/**
+ * Converts phrases wrapped in caret symbols to HTML superscript tags
+ *
+ * @method convertSuperscripts
+ */
+Textdown.prototype.convertSuperscripts = function() {
+  var superscriptRegex = /\^([^\^]+)\^/gm;
+
+  this.text = this.text.replace(superscriptRegex, "<sup>$1</sup>");
+};
+
+/**
+ * Converts phrases wrapped in tilde symbols to HTML subscript tags
+ *
+ * @method convertSubscripts
+ */
+Textdown.prototype.convertSubscripts = function() {
+  var subscriptRegex = /\~([^\~]+)\~/gm;
+
+  this.text = this.text.replace(subscriptRegex, "<sub>$1</sub>");
+};
+
+/**
  * Performs the Textile to HTML conversion
  *
  * @method toHtml
@@ -281,6 +338,7 @@ Textdown.prototype.convertCitations = function() {
  */
 Textdown.prototype.toHtml = function() {
   this.parsePreBlocks();
+  this.convertStrikethroughs();
   this.convertHeaders();
   this.convertLinks();
   this.convertImages();
@@ -294,10 +352,14 @@ Textdown.prototype.toHtml = function() {
   this.convertEmphasis();
   this.convertBold();
   this.convertCitations();
+  this.convertInlineCode();
 
   this.convertBlockQuotes();
   this.convertLists();
   this.convertParagraphs();
+  this.convertInserts();
+  this.convertSuperscripts();
+  this.convertSubscripts();
 
   this.revertPreBlocks();
 
