@@ -60,9 +60,11 @@ Textdown.prototype.convertLists = function() {
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i],
         isOrderedList = line.charAt(0) === '#',
-        isUnorderedList = line.charAt(0) === '*';
+        isUnorderedList = line.charAt(0) === '*',
+        astMatches = line.match(/\*/g),
+        isStrong = astMatches && astMatches.length > 1;
 
-    if (isOrderedList || isUnorderedList) {
+    if (isOrderedList || isUnorderedList && !isStrong) {
       if (isOrderedList) {
         listType = 'ol';
       }
@@ -259,7 +261,7 @@ Textdown.prototype.convertEmphasis = function() {
  * @method convertBold
  */
 Textdown.prototype.convertBold = function() {
-  var boldRegex = /(?!^)\*([^\*]+)\*/gm;
+  var boldRegex = /\*([^\*]+)\*/gm;
 
   this.text = this.text.replace(boldRegex, "<strong>$1</strong>");
 };
@@ -348,18 +350,18 @@ Textdown.prototype.toHtml = function() {
   this.convertTripleDots();
   this.convertDimensions();
   this.convertSymbols();
+  this.convertLists();
 
   this.convertEmphasis();
-  this.convertBold();
   this.convertCitations();
   this.convertInlineCode();
 
   this.convertBlockQuotes();
-  this.convertLists();
   this.convertParagraphs();
   this.convertInserts();
   this.convertSuperscripts();
   this.convertSubscripts();
+  this.convertBold();
 
   this.revertPreBlocks();
 

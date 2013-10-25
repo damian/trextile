@@ -1,4 +1,21 @@
 describe("Textdown", function() {
+  describe("lists", function() {
+    it("should convert any line containing a # at the front and wrap it in an ordered list", function() {
+      inst = new Textdown("# Foo\n# Bar\n# Baz\n");
+      expect(inst.toHtml()).toEqual("<ol><li>Foo</li><li>Bar</li><li>Baz</li></ol>");
+    });
+
+    it("should convert any line containing a * at the front and wrap it in an unordered list", function() {
+      inst = new Textdown("* Foo\n* Bar\n* Baz");
+      expect(inst.toHtml()).toEqual("<ul><li>Foo</li><li>Bar</li><li>Baz</li></ul>");
+    });
+
+    it("should not convert any line starting with an asterisk and containing an asterisk to be a list item", function() {
+      inst = new Textdown("* Foo Bar*\n\n* Baz");
+      expect(inst.toHtml()).toEqual("<p><strong> Foo Bar</strong></p><ul><li>Baz</li></ul>");
+    });
+  });
+
   describe("convert headers", function() {
     it("should convert a newline starting with `h1. Foo` to <h1>Foo</h1>", function() {
       inst = new Textdown("h1. Foo");
@@ -69,20 +86,6 @@ describe("Textdown", function() {
     it("should convert trademark, copyright and registered symbols in to encoded entities", function() {
       inst = new Textdown("One(TM), Two(R), Three(C).");
       expect(inst.toHtml()).toEqual("<p>One&#8482;, Two&#174;, Three&#169;.</p>");
-    });
-  });
-
-  describe("lists", function() {
-    describe("ordered lists", function() {
-      it("should convert any line containing a # at the front and wrap it in an ordered list", function() {
-        inst = new Textdown("# Foo\n# Bar\n# Baz\n");
-        expect(inst.toHtml()).toEqual("<ol><li>Foo</li><li>Bar</li><li>Baz</li></ol>");
-      });
-
-      it("should convert any line containing a * at the front and wrap it in an unordered list", function() {
-        inst = new Textdown("* Foo\n* Bar\n* Baz");
-        expect(inst.toHtml()).toEqual("<ul><li>Foo</li><li>Bar</li><li>Baz</li></ul>");
-      });
     });
   });
 
