@@ -46,8 +46,8 @@ describe("Textdown", function() {
 
   describe("single hypens", function() {
     it("should convert single hyphens in to an encoded entity", function() {
-      inst = new Textdown("Observe - very -- nice!");
-      expect(inst.toHtml()).toEqual("<p>Observe&#8211;very&#8212;nice!</p>");
+      inst = new Textdown("Observe - very!");
+      expect(inst.toHtml()).toEqual("<p>Observe &#8211; very!</p>");
     });
   });
 
@@ -111,19 +111,39 @@ describe("Textdown", function() {
   });
 
   describe("quick phrase modifiers", function() {
-    it("should convert any words prefixed and suffied with underscores in to em tags", function() {
+    it("should convert any words prefixed and suffixed with underscores in to em tags", function() {
       inst = new Textdown('Some text to go _here_ and _also here_.');
       expect(inst.toHtml()).toEqual("<p>Some text to go <em>here</em> and <em>also here</em>.</p>");
     });
 
-    it("should convert any words prefixed and suffied with stars in to strong tags", function() {
+    it("should convert any words prefixed and suffixed with stars in to strong tags", function() {
       inst = new Textdown('Some text to go *here* and *also here*.');
       expect(inst.toHtml()).toEqual("<p>Some text to go <strong>here</strong> and <strong>also here</strong>.</p>");
     });
 
-    it("should convert any words prefixed and suffied with two question marks in to cite tags", function() {
+    it("should convert any words prefixed and suffixed with two question marks in to cite tags", function() {
       inst = new Textdown('Some text to go ??here?? and ??also here??.');
       expect(inst.toHtml()).toEqual("<p>Some text to go <cite>here</cite> and <cite>also here</cite>.</p>");
+    });
+
+    it("should convert any words prefixed and suffixed with at symbols to code tags", function() {
+      inst = new Textdown('Some text to go @here@.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <code>here</code>.</p>");
+    });
+
+    it("should convert any words prefixed and suffixed with hyphens to del tags", function() {
+      inst = new Textdown('Some text to go -here-.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <del>here</del>.</p>");
+    });
+
+    it("should convert any words prefixed and suffixed with plus symbols to ins tags", function() {
+      inst = new Textdown('Some text to go +here+.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <ins>here</ins>.</p>");
+    });
+
+    it("should convert any words prefixed and suffixed with caret symbols to sup tags", function() {
+      inst = new Textdown('Some text to go ^here^.');
+      expect(inst.toHtml()).toEqual("<p>Some text to go <sup>here</sup>.</p>");
     });
   });
 
