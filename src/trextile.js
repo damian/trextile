@@ -1,12 +1,12 @@
 (function(exports) {
 
   /**
-   * Textdown is a lightweight Textile to HTML conversion tool
+   * Trextile is a lightweight Textile to HTML conversion tool
    *
-   * @class Textdown
+   * @class Trextile
    * @constructor
    */
-  var Textdown = function(text) {
+  var Trextile = function(text) {
 
     /**
      * @property textile
@@ -28,7 +28,7 @@
     this.preBlocks = [];
   };
 
-  var T = Textdown.prototype;
+  var T = Trextile.prototype;
 
   /**
    * Converts block h1-h6 textile tags to HTML header tags
@@ -372,6 +372,6 @@
     return this.text;
   };
 
-  exports.Textdown = Textdown;
+  exports.Trextile = Trextile;
 
 })(window);

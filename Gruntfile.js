@@ -40,17 +40,12 @@ module.exports = function(grunt) {
     },
     jshint: {
       all: srcFiles
-    },
-    watch: {
-      files: srcFiles.concat(specFiles),
-      tasks: ['test']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('test', ['jshint', 'jasmine']);
 
