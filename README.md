@@ -1,4 +1,4 @@
-# Trextile [![travis-ci](https://api.travis-ci.org/damian/textdown.png)](http://travis-ci.org/#!/damian/textdown) [![Code Climate](https://codeclimate.com/github/damian/textdown.png)](https://codeclimate.com/github/damian/textdown)
+# Trextile [![Build Status](https://travis-ci.org/damian/trextile.png?branch=master)](https://travis-ci.org/damian/trextile) [![Code Climate](https://codeclimate.com/github/damian/trextile.png)](https://codeclimate.com/github/damian/trextile)
 
 Trextile is a lightweight Textile to HTML conversion library written in JavaScript. You can find a [demo here](http://damian.github.io/trextile/).
 
