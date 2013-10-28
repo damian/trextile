@@ -1,7 +1,7 @@
 {
-  "name": "textdown",
+  "name": "trextile",
   "version": "0.0.0",
-  "description": "JavaScript port of Textile",
+  "description": "A lightweight Textile to HTML conversion library writtein in JavaScript",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "grunt test --verbose"
@@ -9,7 +9,7 @@
   "author": "Damian Nicholson",
   "repository": {
     "type": "git",
-    "url": "https://github.com/damian/textdown"
+    "url": "https://github.com/damian/trextile"
   },
   "license": "BSD-2-Clause",
   "devDependencies": {

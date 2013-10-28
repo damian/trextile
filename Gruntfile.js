@@ -1,3 +1,6 @@
+var srcFiles = ['src/*.js'],
+    specFiles = ['spec/*spec.js'];
+
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -11,14 +14,14 @@ module.exports = function(grunt) {
       }
     },
     jasmine: {
-      src: ['src/*.js'],
+      src: srcFiles,
       options: {
-        specs: 'spec/*spec.js'
+        specs: specFiles[0]
       },
       coverage: {
-        src: ['src/*.js'],
+        src: srcFiles,
         options: {
-          specs: ['spec/*spec.js'],
+          specs: specFiles,
           template: require('grunt-template-jasmine-istanbul'),
           templateOptions: {
             coverage: 'bin/coverage/coverage.json',
@@ -36,7 +39,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      all: ['src/*.js']
+      all: srcFiles
     }
   });
 
