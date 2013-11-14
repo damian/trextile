@@ -2,55 +2,50 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Trextile</title>
+  <title>TRextile</title>
   <link rel="stylesheet" href="stylesheets/application.css">
   <script src="build/trextile.min.js"></script>
 </head>
 <body>
 <header>
   <div class="container">
-    <h1>Trextile</h1>
     <a href="https://github.com/damian/trextile">View on GitHub</a>
+    <h1>TRextile</h1>
   </div>
   <!-- ./container -->
 </header>
 <div id="main">
   <div class="container">
     <textarea onkeyup="updatePreview(this.value)">
-h2. What is Trextile?
+h2. What is TRextile?
 
-Trextile is a *lightweight Textile to HTML conversion library* written in JavaScript
+TRextile is a lightweight *Textile to HTML conversion library* written in JavaScript.
 
-h2. What is Textile?
+h2. Getting started
 
-bq. Textile is a simple text markup. Simple symbols mark words' emphasis. Blocks of text can be easily tagged as headers, quotes, or lists. A Textile document can then be converted to HTML for viewing on the web.
-
-It's built using the following tools:
-
-* "Jasmine":http://pivotal.github.io/jasmine
-* "Grunt.js":http://gruntjs.com
-* "JSHint":http://www.jshint.com
-* "Istanbul":https://github.com/gotwarlost/istanbul
-
-h2. Usage
+The interface to TRextile is incredibly simple. It consumes a Textile string, and outputs HTML using the @toHtml@ method.
 
 <pre>
 <code>
-var textdown = new Trextile("Some example *textile*.");
-textdown.toHtml();
+var html = new Trextile('my *textile* string').toHtml();
+
+console.log(html);
 </code>
 </pre>
 
-Some example *textile*.
+Which prints the following text:
+
+bq. my *textile* string
 
 h2. Found an issue
 
-Log it in the "GitHub issue tracker":https://github.com/damian/textdown/issues.
+TRextile is still very much *a work in progress*, so if you find a bug I'd be much obliged if you could log it in the "GitHub issue tracker":https://github.com/damian/trextile/issues, or even submit a pull request with some tests.
 
 Crafted in haste by "@damian":https://twitter.com/damian.
     </textarea>
     <div id="preview"></div>
     <!-- #preview -->
+    <div class="cf"></div>
   </div>
   <!-- /editor -->
 </div>
